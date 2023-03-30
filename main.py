@@ -6,9 +6,11 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from typing import Tuple
+import time
+import pull_stream_data
+import warnings
 
-STREAM_DATE = "2022-03-29"
-STREAMER_NAME = "Acorn1010"
+warnings.filterwarnings("ignore")
 
 
 def load_and_preprocess_data() -> Tuple[np.ndarray, np.ndarray]:
@@ -30,7 +32,9 @@ def load_and_preprocess_data() -> Tuple[np.ndarray, np.ndarray]:
     return X, y
 
 
-def main() -> None:
+def main(stream_date: str, streamer_name: str) -> None:
+    pull_stream_data.pull_streamer_details(streamer_name=streamer_name)
+
     X, y = load_and_preprocess_data()
 
     scaler = StandardScaler().fit(X)
@@ -51,7 +55,7 @@ def main() -> None:
     print(confusion_matrix(y_test, y_pred))
     print("Accuracy: {:.2f}".format(accuracy_score(y_test, y_pred)))
 
-    prediction_date: Timestamp = pd.Timestamp(STREAM_DATE)
+    prediction_date: Timestamp = pd.Timestamp(stream_date)
     prediction_features = [[prediction_date.timestamp(), prediction_date.dayofweek]]
     scaled_prediction_features = scaler.transform(prediction_features)
     prediction = clf.predict(scaled_prediction_features)[0]
@@ -59,13 +63,26 @@ def main() -> None:
 
     if prediction == 1:
         print(
-            f"{STREAMER_NAME} will stream on {STREAM_DATE} with a probability of {prediction_proba[1]:.2f}"
+            f"{streamer_name} will stream on {stream_date} with a probability of {prediction_proba[1]:.2f}\n"
+            "must be nice."
         )
     else:
         print(
-            f"{STREAMER_NAME} will not stream on {STREAM_DATE} with a probability of {prediction_proba[0]:.2f}"
+            f"{streamer_name} will not stream on {stream_date} with a probability of {prediction_proba[0]:.2f}\n"
+            "Don't act surprised."
         )
 
 
 if __name__ == "__main__":
-    main()
+    streamer_name = input("Give the username of the streamer who is full of shit...? ")
+    print("hmmmm.... interesting. I hope they ban you.")
+    time.sleep(1)
+    print("anyways..... Moving on.....")
+    print(
+        "I'm going to ask for a date next, type it in correctly.... FFS in this format: (2022-03-29)"
+    )
+    time.sleep(1)
+    stream_date = input("Tell me what date they said they were streaming? ")
+    print("smh, what a waste of time... The answer is no. Actually idk. Moving on....")
+    time.sleep(1)
+    main(stream_date=stream_date, streamer_name=streamer_name)

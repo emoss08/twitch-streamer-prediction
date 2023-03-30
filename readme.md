@@ -7,13 +7,21 @@ Inspired by [Acorn1010](https://www.twitch.tv/acorn1010)
 
 ## Instructions
 
-1. Create two separate CSV files that follow the same structure as "not_stream_days.csv" and "stream_days.csv"
+1. Install the requirements.
 
-2. Replace
+   ```bash
+   python -m venv venv
 
-   ```python
-        STREAM_DATE = "2022-03-29"
-        STREAMER_NAME = "Acorn1010"
+   source venv/scripts/activate
+
+   pip install -r requirements.txt
+   ```
+
+2. Make a .env file
+
+   ```dotenv
+   ACCESS_TOKEN=ACCESS_TOKEN
+   CLIENT_ID=YOUR_CLIENT_ID
     ```
 
 3. Run it.
