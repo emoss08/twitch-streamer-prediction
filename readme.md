@@ -7,6 +7,8 @@ Inspired by [Acorn1010](https://www.twitch.tv/acorn1010)
 
 ## Instructions
 
+IMPORTANT: Stream must have stream vods for this to work.
+
 1. Install the requirements.
 
    ```bash
